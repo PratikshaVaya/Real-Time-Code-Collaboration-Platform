@@ -34,7 +34,7 @@ Code together, debug in real-time, and execute instantly—all within your brows
 
 <br>
 <p align="center">
-  <img src="./public/screenshot.png" alt="DevCollab Editor Preview" width="100%" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+  <img src="./public/Screenshot%202026-04-28%20232848.png" alt="DevCollab Editor Preview" width="100%" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
 </p>
 <br>
 
@@ -55,6 +55,10 @@ DevCollab features a robust, containerized execution pipeline using **Piston**.
 - **Offline Support**: Execute code without relying on external APIs.
 - **Security**: Code runs in an isolated, privileged container environment.
 - **Persistence**: Language runtimes (Python 3.10, GCC 10.2, Java 15) are cached in Docker volumes for instant startup.
+
+<p align="center">
+  <img src="./public/Screenshot%202026-04-28%20232904.png" alt="DevCollab Execution Engine" width="100%" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
+</p>
 
 ## 🛠 Tech Stack
 
