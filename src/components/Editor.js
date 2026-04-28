@@ -7,7 +7,7 @@ import ACTIONS from "../actions/Actions";
 import Codemirror from "codemirror";
 import "codemirror/lib/codemirror.css";
 
-// theme
+// theme (all imports remain same...)
 import "codemirror/theme/3024-day.css";
 import "codemirror/theme/3024-night.css";
 import "codemirror/theme/abbott.css";
@@ -107,20 +107,31 @@ import "codemirror/addon/search/jump-to-line.js";
 import "codemirror/addon/dialog/dialog.js";
 import "codemirror/addon/dialog/dialog.css";
 
-const Editor = React.forwardRef(({ socketRef, roomId, onCodeChange }, ref) => {
+const Editor = React.forwardRef(({ onCodeChange, socketRef, roomId, activeFile }, ref) => {
   const editorRef = useRef(null);
+  const cursorsRef = useRef({}); 
   const lang = useRecoilValue(language);
   const editorTheme = useRecoilValue(cmtheme);
 
+  // Use refs to store the latest prop values and avoid stale closures in event listeners
+  const propsRef = useRef({ onCodeChange, roomId, activeFile });
+  
+  useEffect(() => {
+    propsRef.current = { onCodeChange, roomId, activeFile };
+  }, [onCodeChange, roomId, activeFile]);
+
   useImperativeHandle(ref, () => ({
     setCode: (code) => {
-      editorRef.current.setValue(code);
+      if (editorRef.current && editorRef.current.getValue() !== code) {
+        editorRef.current.setValue(code);
+      }
     },
   }));
 
-
   useEffect(() => {
     async function init() {
+      if (editorRef.current) return; // Prevent double init
+
       editorRef.current = Codemirror.fromTextArea(
         document.getElementById("realtimeEditor"),
         {
@@ -134,18 +145,39 @@ const Editor = React.forwardRef(({ socketRef, roomId, onCodeChange }, ref) => {
 
       editorRef.current.on("change", (instance, changes) => {
         const { origin } = changes;
-        const code = instance.getValue();
-        console.log("main:editor: ", code);
-        onCodeChange(code);
         if (origin !== "setValue") {
-          socketRef.current.emit(ACTIONS.CODE_CHANGE, {
-            roomId,
-            code,
+          const code = instance.getValue();
+          // Use the latest callback from Ref
+          propsRef.current.onCodeChange(code);
+        }
+      });
+
+      editorRef.current.on("cursorActivity", (instance) => {
+        if (socketRef.current) {
+          const cursor = instance.getCursor();
+          // Use the latest room and file from Ref
+          socketRef.current.emit(ACTIONS.CURSOR_MOVE, {
+            roomId: propsRef.current.roomId,
+            filename: propsRef.current.activeFile,
+            cursor,
           });
         }
       });
     }
     init();
+
+    return () => {
+        if (editorRef.current) {
+            editorRef.current.toTextArea();
+            editorRef.current = null;
+        }
+    };
+  }, []); 
+
+  useEffect(() => {
+    if (editorRef.current) {
+      editorRef.current.setOption("mode", { name: lang });
+    }
   }, [lang]);
 
   useEffect(() => {
@@ -156,17 +188,58 @@ const Editor = React.forwardRef(({ socketRef, roomId, onCodeChange }, ref) => {
 
   useEffect(() => {
     if (socketRef.current) {
-      socketRef.current.on(ACTIONS.CODE_CHANGE, ({ code }) => {
-        if (code !== null) {
-          editorRef.current.setValue(code);
+      socketRef.current.on(ACTIONS.CURSOR_MOVE, ({ socketId, username, filename, cursor }) => {
+        // Use latest activeFile from Ref for comparison
+        if (filename !== propsRef.current.activeFile) {
+          if (cursorsRef.current[socketId]) {
+            cursorsRef.current[socketId].clear();
+            delete cursorsRef.current[socketId];
+          }
+          return;
+        }
+
+        if (cursorsRef.current[socketId]) {
+          cursorsRef.current[socketId].clear();
+        }
+
+        const cursorEl = document.createElement('span');
+        cursorEl.className = 'remote-cursor';
+        cursorEl.style.borderLeftColor = stringToColor(username);
+        
+        const labelEl = document.createElement('div');
+        labelEl.className = 'remote-cursor-label';
+        labelEl.style.backgroundColor = stringToColor(username);
+        labelEl.innerText = username;
+        cursorEl.appendChild(labelEl);
+
+        cursorsRef.current[socketId] = editorRef.current.setBookmark(cursor, {
+          widget: cursorEl,
+        });
+      });
+
+      socketRef.current.on(ACTIONS.DISCONNECTED, ({ socketId }) => {
+        if (cursorsRef.current[socketId]) {
+          cursorsRef.current[socketId].clear();
+          delete cursorsRef.current[socketId];
         }
       });
     }
 
     return () => {
-      socketRef.current?.off(ACTIONS.CODE_CHANGE);
+      if (socketRef.current) {
+        socketRef.current.off(ACTIONS.CURSOR_MOVE);
+        socketRef.current.off(ACTIONS.DISCONNECTED);
+      }
     };
-  }, [socketRef.current]);
+  }, [socketRef.current]); // Only re-subscribe if socket changes
+
+  function stringToColor(str) {
+    let hash = 0;
+    for (let i = 0; i < str.length; i++) {
+      hash = str.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    return `hsl(${hash % 360}, 70%, 60%)`;
+  }
 
   return <textarea id="realtimeEditor"></textarea>;
 });

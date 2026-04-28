@@ -181,16 +181,11 @@ footer a:hover {
 }
 
 .mainWrap {
-    display: grid;
-    grid-template-columns: 200px 1fr;
+    display: flex;
     height: 100vh;
     background: #0f172a;
-}
-
-@media screen and (min-width: 480px) {
-    .mainWrap {
-        grid-template-columns: 280px 1fr;
-    }
+    width: 100vw;
+    overflow: hidden;
 }
 
 .aside {
@@ -198,13 +193,15 @@ footer a:hover {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-right: 1px solid var(--glass-border);
-    padding: 24px;
+    padding: 16px;
     color: #fff;
     display: flex;
     flex-direction: column;
     box-shadow: 4px 0 24px rgba(0,0,0,0.2);
     z-index: 10;
+    overflow-y: auto;
 }
+
 
 .asideInner {
     flex: 1;
@@ -247,8 +244,8 @@ footer a:hover {
 
 .logo {
     border-bottom: 1px solid var(--glass-border);
-    padding-bottom: 20px;
-    margin-bottom: 20px;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
 }
 
 .logoImage {
@@ -432,10 +429,330 @@ footer a:hover {
 
 @media screen and (min-width: 480px) {
     .CodeMirror {
-        min-height: calc(100vh - 20px);
-        width: calc(100vw - 280px);
+        height: 100% !important;
+        width: 100%;
         font-size: 16px;
         line-height: 1.7;
-        padding-top: 20px;
+        margin: 0;
     }
 }
+
+.CodeMirror-scroll {
+    height: 100% !important;
+}
+
+.CodeMirror-lines {
+    padding: 0 !important;
+}
+
+.CodeMirror-code {
+    padding: 0 !important;
+}
+
+
+
+
+/* ---- File Tree ---- */
+.fileTree {
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 16px;
+}
+
+.fileTreeHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.fileTreeTitle {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #64748b;
+}
+
+.addFileBtn {
+    background: rgba(74, 222, 128, 0.15);
+    border: 1px solid rgba(74, 222, 128, 0.3);
+    color: #4ade80;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.addFileBtn:hover {
+    background: rgba(74, 222, 128, 0.3);
+    transform: scale(1.1);
+}
+
+.fileList {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.addFileForm {
+    margin-bottom: 4px;
+}
+
+.addFileInput {
+    width: 100%;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(74, 222, 128, 0.4);
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    font-size: 13px;
+    outline: none;
+    box-sizing: border-box;
+    font-family: 'Cascadia Code', monospace;
+}
+
+.fileItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    position: relative;
+    border: 1px solid transparent;
+}
+
+.fileItem:hover {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.fileItem.active {
+    background: rgba(59, 130, 246, 0.15);
+    border-color: rgba(59, 130, 246, 0.3);
+}
+
+.fileIcon {
+    font-size: 11px;
+    font-weight: 700;
+    color: #94a3b8;
+    min-width: 24px;
+    font-family: 'Cascadia Code', monospace;
+}
+
+.fileName {
+    font-size: 13px;
+    color: #cbd5e1;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: 'Cascadia Code', monospace;
+}
+
+.fileItem.active .fileName {
+    color: #93c5fd;
+}
+
+.deleteFileBtn {
+    background: none;
+    border: none;
+    color: #ef4444;
+    cursor: pointer;
+    font-size: 12px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    padding: 2px 4px;
+    border-radius: 4px;
+}
+
+.fileItem:hover .deleteFileBtn {
+    opacity: 1;
+}
+
+.deleteFileBtn:hover {
+    background: rgba(239, 68, 68, 0.15);
+}
+
+/* Connected label */
+.connectedLabel {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #64748b;
+    margin: 4px 0 8px;
+}
+
+/* Editor tab bar */
+.editorWrap {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.editorTabBar {
+    background: rgba(15, 23, 42, 0.8);
+    border-bottom: 1px solid var(--glass-border);
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.editorActiveTab {
+    font-family: 'Cascadia Code', monospace;
+    font-size: 13px;
+    color: #93c5fd;
+    background: rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(59, 130, 246, 0.25);
+    padding: 4px 12px;
+    border-radius: 6px;
+}
+
+.runBtn {
+    background: #22c55e;
+    color: white;
+    border: none;
+    padding: 6px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.runBtn:hover {
+    background: #16a34a;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
+}
+
+.runBtn.running {
+    background: #166534;
+    cursor: wait;
+}
+
+.editorSubWrap {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+
+
+/* Output Panel */
+.outputContainer {
+    background: #0f172a;
+    border-top: 2px solid var(--glass-border);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 50;
+}
+
+.outputResizer {
+    height: 4px;
+    width: 100%;
+    cursor: row-resize;
+    position: absolute;
+    top: -2px;
+    left: 0;
+    z-index: 100;
+}
+
+.outputResizer:hover {
+    background: rgba(59, 130, 246, 0.5);
+}
+
+.outputHeader {
+    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.03);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.outputHeader span {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #64748b;
+    text-transform: uppercase;
+}
+
+.closeOutputBtn {
+    background: none;
+    border: none;
+    color: #64748b;
+    cursor: pointer;
+    padding: 4px;
+}
+
+.closeOutputBtn:hover {
+    color: white;
+}
+
+.outputContent {
+    flex: 1;
+    margin: 0;
+    padding: 16px;
+    color: #cbd5e1;
+    font-family: 'Cascadia Code', monospace;
+    font-size: 13px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    background: #020617;
+}
+
+
+/* Remote Cursor */
+.remote-cursor {
+    border-left: 2px solid;
+    position: relative;
+    height: 1.5em;
+    display: inline-block;
+}
+
+.remote-cursor-label {
+    position: absolute;
+    top: -1.2em;
+    left: -1px;
+    padding: 1px 6px;
+    font-size: 10px;
+    font-weight: 600;
+    color: white;
+    white-space: nowrap;
+    border-radius: 4px 4px 4px 0;
+    pointer-events: none;
+    user-select: none;
+    z-index: 10;
+    font-family: 'Outfit', sans-serif;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Resizer */
+.resizer {
+    width: 4px;
+    cursor: col-resize;
+    background: transparent;
+    transition: background 0.2s;
+    z-index: 100;
+}
+
+.resizer:hover, .resizer:active {
+    background: rgba(59, 130, 246, 0.5);
+}
+
+

@@ -42,7 +42,7 @@ const Home = () => {
                 <img
                     className="homePageLogo"
                     src="/logo.png"
-                    alt="code-sync-logo"
+                    alt="dev-collab-logo"
                 />
                 <h4 className="mainLabel">Generate new room or paste invitation ROOM ID</h4>
                 <div className="inputGroup">

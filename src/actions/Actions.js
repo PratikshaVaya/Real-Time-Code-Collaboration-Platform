@@ -5,6 +5,12 @@ const ACTIONS = {
     CODE_CHANGE: 'code-change',
     SYNC_CODE: 'sync-code',
     LEAVE: 'leave',
+    FILE_CREATE: 'file-create',
+    FILE_DELETE: 'file-delete',
+    FILES_SYNC: 'files-sync',
+    CURSOR_MOVE: 'cursor-move',
+    CODE_EXECUTION: 'code-execution',
+    LANGUAGE_CHANGE: 'language-change',
 };
 
-export default ACTIONS;
+export default ACTIONS;

@@ -1,123 +1,107 @@
 <h1 align="center">
   <br>
-  <img src="./public/logo.png" alt="Sync Code Logo" width="200">
+  <img src="./public/logo.png" alt="DevCollab Logo" width="200">
   <br>
-  Sync Code: Real-time Collaborative Code Editor
+  DevCollab: Real-time Collaborative Code Editor
   <br>
 </h1>
 
-<h4 align="center">A powerful, real-time collaborative code editor built for developers and teams.</h4>
+<h4 align="center">A high-performance, real-time collaborative code editor with integrated local execution engine.</h4>
 
 <p align="center">
   <a href="https://reactjs.org/"><img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React"></a>
-  <a href="https://nodejs.org/"><img src="https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white" alt="Node.js"></a>
-  <a href="https://expressjs.com/"><img src="https://img.shields.io/badge/Express.js-404D59?style=for-the-badge" alt="Express.js"></a>
-  <a href="https://socket.io/"><img src="https://img.shields.io/badge/Socket.io-black?style=for-the-badge&logo=socket.io&badgeColor=010101" alt="Socket.io"></a>
+  <a href="https://nodejs.org/"><img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white" alt="Node.js"></a>
+  <a href="https://socket.io/"><img src="https://img.shields.io/badge/Socket.io-010101?style=for-the-badge&logo=socketdotio&badgeColor=010101" alt="Socket.io"></a>
+  <a href="https://www.docker.com/"><img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker"></a>
 </p>
 
 <p align="center">
   <a href="#features">Features</a> •
+  <a href="#execution-engine">Execution Engine</a> •
   <a href="#tech-stack">Tech Stack</a> •
   <a href="#installation">Installation</a> •
-  <a href="#docker">Docker Setup</a> •
-  <a href="#open-source-contribution">Contribute</a>
+  <a href="#docker-setup">Docker Setup</a> •
+  <a href="#contributing">Contribute</a>
 </p>
 
 ---
 
 ## 🚀 Introduction
 
-Are you tired of sending code snippets back and forth, struggling to debug and collaborate with your team? Look no further! **Sync Code** is here to revolutionize the way you code together. 
+**DevCollab** is a powerful real-time collaborative environment designed for developers, teams, and technical interviewers. It revolutionizes the way you code together by providing a seamless, low-latency editing experience combined with a **high-performance local execution engine**.
 
-This intuitive collaborative code editor is designed to empower developers and teams to work seamlessly in real-time, regardless of their location. Code together, debug together, and ship faster!
+Code together, debug in real-time, and execute instantly—all within your browser.
 
 <br>
 <p align="center">
-  <img src="./public/screenshot.png" alt="Sync Code Editor Preview" width="100%">
+  <img src="./public/screenshot.png" alt="DevCollab Editor Preview" width="100%" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
 </p>
 <br>
 
 ## ✨ Features
 
-- **👨‍💻 Real-time Collaboration:** Multiple users can join a single room and edit code simultaneously.
-- **⚡ Instant Sync:** All code changes, cursor movements, and user join/leave events are reflected instantly.
-- **🎨 Customization:** Multiple editor themes to suit your coding preferences.
-- **🌐 Multi-Language Support:** Robust syntax highlighting for a variety of programming languages.
-- **📋 Easy Sharing:** 1-click button to copy the Room ID to your clipboard.
-- **💾 State Persistence:** Safely leave a room and rejoin later without losing progress.
+- **👨‍💻 Real-time Collaboration:** Simultaneous multi-user editing powered by Socket.io.
+- **⚡ High-Performance Execution:** Integrated **Piston Engine** for local code execution (Python, C++, Java, etc.).
+- **🔄 Smart Fallback Proxy:** Automatically switches between local and cloud execution for 100% uptime.
+- **🎨 Customization:** Multiple professional editor themes and syntax highlighting for dozens of languages.
+- **📋 Instant Sharing:** One-click Room ID sharing for rapid collaboration.
+- **💾 Persistent State:** Auto-saving and state persistence ensure you never lose your progress.
+- **📁 Multi-file Support:** Manage multiple files within a single collaborative room.
+
+## ⚙️ Execution Engine
+
+DevCollab features a robust, containerized execution pipeline using **Piston**.
+
+- **Offline Support**: Execute code without relying on external APIs.
+- **Security**: Code runs in an isolated, privileged container environment.
+- **Persistence**: Language runtimes (Python 3.10, GCC 10.2, Java 15) are cached in Docker volumes for instant startup.
 
 ## 🛠 Tech Stack
 
-- **Frontend:** React.js, React-Toastify, CodeMirror
+- **Frontend:** React.js, CodeMirror, Recoil, React-Hot-Toast
+- **Build Tool:** Vite
 - **Backend:** Node.js, Express.js
 - **Real-Time Engine:** Socket.io
+- **Execution Engine:** Piston (Dockerized)
 - **Containerization:** Docker & Docker Compose
 
 ## 💻 Installation
 
-### Running Locally
+### Prerequisites
+- [Node.js](https://nodejs.org/) (v16+)
+- [Docker](https://www.docker.com/) (For local code execution)
 
-1. **Clone the repository:**
+### Quick Start
+1. **Clone & Install:**
    ```bash
    git clone https://github.com/PratikshaVaya/Real-Time-Code-Collaboration-Platform.git
    cd Real-Time-Code-Collaboration-Platform
-   ```
-
-2. **Install dependencies:**
-   ```bash
    npm install
    ```
 
-3. **Environment Setup:**
-   Create a `.env` file in the root folder (or use the one automatically generated) and add the following:
-   ```env
-   REACT_APP_BACKEND_URL=http://localhost:5000
-   SERVER_PORT=5000
-   ```
-
-4. **Start the backend server:**
+2. **Run with Docker (Recommended):**
+   This starts the full suite including the high-speed execution engine.
    ```bash
-   npm run server:dev
+   docker-compose up -d
    ```
 
-5. **Start the React frontend (in a separate terminal):**
+3. **Run Locally (Dev Mode):**
    ```bash
-   npm start
+   npm run server:dev  # Start Backend
+   npm start           # Start Frontend
    ```
 
-6. Open `http://localhost:3000` in your browser. Create a new room, enter a username, and start collaborating!
+## 🤝 Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ---
-
-<a name="docker"></a>
-## 🐳 Running via Docker (Recommended)
-
-Running the application using Docker ensures you have a clean, reproducible environment.
-
-1. **Ensure Docker is installed and running** on your machine.
-2. **Run Docker Compose:**
-   ```bash
-   docker-compose up --build
-   ```
-3. Once built, the frontend will be available at `http://localhost:3000` and the backend will run securely on `http://localhost:5000`.
-
-## 🤝 Open Source Contribution
-
-Contributions, issues, and feature requests are always welcome! 
-
-1. Fork this repository.
-2. Clone your forked repository:
-   ```bash
-   git clone https://github.com/your-username/Real-Time-Code-Collaboration-Platform.git
-   ```
-3. Navigate into the directory and create a new branch:
-   ```bash
-   git checkout -b feature/my-awesome-feature
-   ```
-4. Commit your changes and push them to your branch.
-5. Open a Pull Request on this repository!
-
-<br>
 
 <p align="center">
   <i>Built with ❤️ by <a href="https://github.com/PratikshaVaya">Pratiksha Vaya</a></i>
