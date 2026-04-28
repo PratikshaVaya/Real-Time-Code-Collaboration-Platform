@@ -79,8 +79,8 @@ const Home = () => {
             </div>
             <footer>
                 <h4>
-                    Build by &nbsp;
-                    <Link href="https://github.com/Mohitur669" target="_blank" rel="noopener noreferrer">Mohd Mohitur Rahaman</Link>
+                    Built by &nbsp;
+                    <a href="https://github.com/PratikshaVaya" target="_blank" rel="noopener noreferrer" style={{ color: '#4aee88', textDecoration: 'none' }}>Pratiksha Vaya</a>
                 </h4>
             </footer>
         </div>
