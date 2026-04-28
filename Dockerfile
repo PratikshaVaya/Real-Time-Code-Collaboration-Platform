@@ -13,7 +13,7 @@ RUN npm install
 COPY . .
 
 # Set environment variables
-ENV REACT_APP_BACKEND_URL=http://localhost:5000
+ENV VITE_BACKEND_URL=http://localhost:5000
 ENV SERVER_PORT=5000
 
 # Expose the necessary ports

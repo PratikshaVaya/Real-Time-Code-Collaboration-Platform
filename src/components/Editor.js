@@ -164,7 +164,7 @@ const Editor = React.forwardRef(({ socketRef, roomId, onCodeChange }, ref) => {
     }
 
     return () => {
-      socketRef.current.off(ACTIONS.CODE_CHANGE);
+      socketRef.current?.off(ACTIONS.CODE_CHANGE);
     };
   }, [socketRef.current]);
 

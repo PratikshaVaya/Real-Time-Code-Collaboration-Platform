@@ -1,18 +1,19 @@
-const express = require('express');
+import express from 'express';
+import { createServer } from 'http';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
+import { Server } from 'socket.io';
+import ACTIONS from './src/actions/Actions.js';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 const app = express();
 
-const http = require('http');
-const path = require('path');
-const {Server} = require('socket.io');
-
-const ACTIONS = require('./src/actions/Actions');
-
-const server = http.createServer(app);
+const server = createServer(app);
 const io = new Server(server);
 
 app.use(express.static('build'));
 app.use((req, res, next) => {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
+    res.sendFile(join(__dirname, 'build', 'index.html'));
 });
 
 const userSocketMap = {};

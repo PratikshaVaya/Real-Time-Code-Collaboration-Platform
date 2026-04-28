@@ -31,6 +31,12 @@ Are you tired of sending code snippets back and forth, struggling to debug and c
 
 This intuitive collaborative code editor is designed to empower developers and teams to work seamlessly in real-time, regardless of their location. Code together, debug together, and ship faster!
 
+<br>
+<p align="center">
+  <img src="./public/screenshot.png" alt="Sync Code Editor Preview" width="100%">
+</p>
+<br>
+
 ## ✨ Features
 
 - **👨‍💻 Real-time Collaboration:** Multiple users can join a single room and edit code simultaneously.
